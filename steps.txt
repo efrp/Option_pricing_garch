@@ -1,0 +1,8 @@
+Lépések pusholásnál:
+1: GitHub Desktop megnyitás
+2: File -> clone repository ->válaszd ki a közös repónkat (garch a vége) -> Clone
+3: Ekkor a saját számítógépeden létrehozott egy mappát a repóval. Keresd meg azt a mappát
+4: Ebbe a mappába helyezz bármilyen script filet: txt, kódok, word stb
+5: GitHub desktop ->Commit to master (descriptiont tuti kell írni) (ez a bal alsó sarokban van)
+5: Github desktop ->push to origin (ez középen felül van)
+
