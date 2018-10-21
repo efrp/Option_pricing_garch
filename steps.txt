@@ -1,0 +1,18 @@
+Lépések a repo saját gépre mentésénél (csak legelőször kell):
+2: File -> clone repository ->válaszd ki a közös repónkat (garch a vége) -> Clone
+3: Ekkor a saját számítógépeden létrehozott egy mappát a repóval. Keresd meg azt a mappát
+
+Lépések pusholásnál:
+1: GitHub Desktop megnyitás
+2: Mivel mi is dolgozunk a repóval, ezért az folyamatosan frissül -> nincs rajta a gépeden a current pozició 
+3: Fetch Origin (középen felül) -> Pull Origin : ez frissíti a saját gépeden a mappádat
+4: Ebbe a mappába helyezz bármilyen script filet: txt, kódok, word stb
+5: GitHub desktop -> Current Branch -> Mindenképp a branch-for-codes legyen a current branch
+6: Commit to branch-for-codes (descriptiont tuti kell írni) (ez a bal alsó sarokban van)
+7: Github desktop ->push to origin (ez középen felül van)
+8: Github a böngészőőben ->new pull request (from master to branch-for-codes) -> indoklás hogy mit csináltál
+
+Ha bármilyen észrevételetek van a fájlokkal kapcsolatban, akkor azt az Issues - New Issue-nál tudjátok leírni.
+Ilyenek pl hogy xy kódja nem jó, mert... Ezeket azért érdemes itt írni, mert nyomon lehet követni egyrészt a problémát,
+másrészt ha megoldotta valaki, akkor az le is tudja zárni, 
+ha az új kód descriptionjébe azt írja hogy fixed #6 (6 mint a 6.issue - fel fogja dobni a számot)
