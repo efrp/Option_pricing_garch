@@ -10,3 +10,4 @@ Lépések pusholásnál:
 5: GitHub desktop ->Commit to master (descriptiont tuti kell írni) (ez a bal alsó sarokban van)
 5: Github desktop ->push to origin (ez középen felül van)
 
+Ha bármilyen észrevételetek van a fájlokkal kapcsolatban, akkor azt az Issues - New Issue-nál tudjátok leírni. Ilyenek pl hogy xy kódja nem jó, mert... Ezeket azért érdemes itt írni, mert nyomon lehet követni egyrészt a problémát, másrészt ha megoldotta valaki, akkor az le is tudja zárni, ha az új kód descriptionjébe azt írja hogy fixed #6 (6 mint a 6.issue - fel fogja dobni a számot)
