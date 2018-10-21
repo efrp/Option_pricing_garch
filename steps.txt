@@ -1,8 +1,12 @@
-LÈpÈsek pushol·sn·l:
-1: GitHub Desktop megnyit·s
-2: File -> clone repository ->v·laszd ki a kˆzˆs repÛnkat (garch a vÈge) -> Clone
-3: Ekkor a saj·t sz·mÌtÛgÈpeden lÈtrehozott egy mapp·t a repÛval. Keresd meg azt a mapp·t
-4: Ebbe a mapp·ba helyezz b·rmilyen script filet: txt, kÛdok, word stb
-5: GitHub desktop ->Commit to master (descriptiont tuti kell Ìrni) (ez a bal alsÛ sarokban van)
-5: Github desktop ->push to origin (ez kˆzÈpen fel¸l van)
+L√©p√©sek a repo saj√°t g√©pre ment√©s√©n√©l (csak legel≈ësz√∂r kell):
+2: File -> clone repository ->v√°laszd ki a k√∂z√∂s rep√≥nkat (garch a v√©ge) -> Clone
+3: Ekkor a saj√°t sz√°m√≠t√≥g√©peden l√©trehozott egy mapp√°t a rep√≥val. Keresd meg azt a mapp√°t
+
+L√©p√©sek pushol√°sn√°l:
+1: GitHub Desktop megnyit√°s
+2: Mivel mi is dolgozunk a rep√≥val, ez√©rt az folyamatosan friss√ºl -> nincs rajta a g√©peden a current pozici√≥ 
+3: Fetch Origin (k√∂z√©pen fel√ºl) -> Pull Origin : ez friss√≠ti a saj√°t g√©peden a mapp√°dat
+4: Ebbe a mapp√°ba helyezz b√°rmilyen script filet: txt, k√≥dok, word stb
+5: GitHub desktop ->Commit to master (descriptiont tuti kell √≠rni) (ez a bal als√≥ sarokban van)
+5: Github desktop ->push to origin (ez k√∂z√©pen fel√ºl van)
 
