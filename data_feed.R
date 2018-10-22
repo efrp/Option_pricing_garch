@@ -54,12 +54,14 @@ for (i in 2:6)
 
 # Lets check for homoscedasticity (is it a WN process)
 #plot(data[,1], data[,i]^2, type='l')
-
 #Box.test(coredata(data[,i]^2), type = "Ljung-Box", lag = 12)
 
 # Finding the best ARIMA model to the returns
-
-data_arfima <- autoarfima(data=data[,i], ar.max=2, ma.max=2, criterion = "AIC", method = "partial", return.all = FALSE)
+data_arfima <- autoarfima(data=data[,i], ar.max=3, ma.max=3, criterion = "AIC", method = "partial", return.all = FALSE)
+best_ar<-data_arfima[["fit"]]@model[["modelinc"]][["ar"]]
+best_ma<-data_arfima[["fit"]]@model[["modelinc"]][["ma"]]
+include_mean_o_n<-data_arfima[["fit"]]@model[["modelinc"]][["mu"]]
+print(paste0("Let's fit an ARMA(", best_ar, ",",best_ma, ") model to the ", ticker[i], " data."))
 #plot(data[,1],data_arfima[["fit"]]@fit[["residuals"]], type='l', xlab="Date", ylab="ARMA(0,0) residuals")
 #acf(data_arfima[["fit"]]@fit[["residuals"]])
 #qqnorm(data_arfima[["fit"]]@fit[["residuals"]])
@@ -71,7 +73,7 @@ data_arfima <- autoarfima(data=data[,i], ar.max=2, ma.max=2, criterion = "AIC", 
 # GARCH specification and estimation
 
 # GARCH model specification
-data_garch11_spec <- ugarchspec(variance.model = list(garchOrder = c(1, 1)),mean.model = list(armaOrder = c(0, 0), include.mean = TRUE), distribution.model = "norm")
+data_garch11_spec <- ugarchspec(variance.model = list(garchOrder = c(1, 1)),mean.model = list(armaOrder = c(best_ar, best_ma), include.mean = include_mean_o_n), distribution.model = "norm")
 
 # GARCH model estimation
 (data_garch11_fit <- ugarchfit(spec = data_garch11_spec, data = data[,i]))
