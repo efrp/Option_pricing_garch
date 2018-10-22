@@ -1,61 +1,45 @@
+install.packages("tidyquant")
 library(tidyverse)
+library(tidyquant)
 library(magrittr)
 library(quantmod)
 library(plyr)
 library(dplyr)
+install.packages("rugarch")
 library(rugarch)
-
 
 start <- as.Date("2014-10-01")
 end <- as.Date("2018-10-01")
-ticker <- c("AMD", "AMZN", "AAPL", "BAC", "EBAY")
-for (i in 1:5) {
-  getSymbols(ticker[i], src = "yahoo", from = start, to = end)
-}
 
-AMD_date <- as.data.frame(AMD)
-AMD_date$date <- time(AMD)
-AMD <- AMD_date[,c(1,7)]
-colnames(AMD) <- c("Close", "Date")
+yahoo <- function(ticker, start, end) {
+  tq_get(ticker, get = "stock.prices", from = start, to = end) %>%
+    select(date, adjusted) %>% 
+    mutate( LogPrice = log(adjusted), LogReturn = c(0,diff(LogPrice)))
+}  
+acf(yahoo("AAPL", start, end)[,4])
+pacf(yahoo("AAPL", start, end)[,4], lag.max = 100)
+d = yahoo("AAPL", start, end)
 
-AMZN_date <- as.data.frame(AMZN)
-AMZN_date$date <- time(AMZN)
-AMZN <- AMZN_date[,c(1,7)]
-colnames(AMZN) <- c("Close", "Date")
 
-AAPL_date <- as.data.frame(AAPL)
-AAPL_date$date <- time(AAPL)
-AAPL <- AAPL_date[,c(1,7)]
-colnames(AAPL) <- c("Close", "Date")
+model=ugarchspec(
+  variance.model = list(model = "sGARCH", garchOrder = c(1, 1)),
+  distribution.model = "norm"
+)
 
-BAC_date <- as.data.frame(BAC)
-BAC_date$date <- time(BAC)
-BAC <- BAC_date[,c(1,7)]
-colnames(BAC) <- c("Close", "Date")
 
-EBAY_date <- as.data.frame(EBAY)
-EBAY_date$date <- time(EBAY)
-EBAY <- EBAY_date[,c(1,7)]
-colnames(EBAY) <- c("Close", "Date")
+modelfit = ugarchfit(data=data.frame(d)[,c(1,4)], spec = model, solver = "solnp", 
+                    fit.control=list(scale=1), solver.control=list(trace=1)) 
 
-data <- join_all(list(AMD, AMZN, AAPL, BAC, EBAY), by="Date", type='inner')
-colnames(data) <- c("AMD", "Date", "AMZN", "AAPL", "BAC", "EBAY")
-data<-data[,c("Date", "AMD", "AMZN", "AAPL", "BAC", "EBAY")]
+plot(modelfit, which = "all")
+#data <- join_all(list(AMD, AMZN, AAPL, BAC, EBAY), by="Date", type='inner')
+#colnames(data) <- c("AMD", "Date", "AMZN", "AAPL", "BAC", "EBAY")
+#data<-data[,c("Date", "AMD", "AMZN", "AAPL", "BAC", "EBAY")]
 
-for (i in 1:1006) {
-data[i,-1]<-log(data[i,-1]/data[i+1,-1])
-}
-
-data<-data[1:1006,]
-
-for (i in 2:6)
-{
-  plot(data[,1], data[,2], main = ticker[i-1], type="l", xlab="Date", ylab=ticker[i-1])
 
 # Lets check for homoscedasticity (is it a WN process)
 #plot(data[,1], data[,i]^2, type='l')
 #Box.test(coredata(data[,i]^2), type = "Ljung-Box", lag = 12)
-
+autoarfima( data.frame(yahoo("AAPL")[,4]), ar.max = 3, ma.max = 3, criterion = "AIC", method = "full", distribution.model = "norm", include.mean = F)
 # Finding the best ARIMA model to the returns
 data_arfima <- autoarfima(data=data[,i], ar.max=3, ma.max=3, criterion = "AIC", method = "partial", return.all = FALSE)
 best_ar<-data_arfima[["fit"]]@model[["modelinc"]][["ar"]]
