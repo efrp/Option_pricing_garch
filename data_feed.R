@@ -47,12 +47,12 @@ data[i,-1]<-log(data[i,-1]/data[i+1,-1])
 }
 
 data<-data[1:1006,]
-forecastperiod<-20
+forecastperiod<-50
 data[1007:(1006+forecastperiod),1]<-as.Date(seq(from = end+1, to = end+forecastperiod, by=1))
 
 for (i in 2:6)
 {
-  
+
 #plot(data[1:1006,1], data[1:1006,i], main = ticker[i-1], type="l", xlab="Date", ylab=ticker[i-1])
 
 # Lets check for homoscedasticity (is it a WN process)
@@ -88,22 +88,6 @@ data_garch11_fit@model[["modeldata"]][["index"]]<- as.POSIXct.Date(data[1:1006,1
 #plot(data[1:1006,1],data_garch11_fit@fit[["residuals"]]^2, type='l', xlab="Date", ylab="GARCH(1,1) residuals")
 #acf(data_garch11_fit@fit[["residuals"]]^2, main=paste0("ACF of GARCH(1,1) residuals^2 of ",ticker[i-1]))
 #qqnorm(data_garch11_fit@fit[["residuals"]]^2)
-
-# Risk model backtesting
-#data_garch11_roll@model[["index"]]<- as.POSIXct.Date(data[121:1006,1])
-#report(data_garch11_roll, type = "VaR", VaR.alpha = 0.01, conf.level = 0.95)
-
-# plot backtesting graph
-#data_VaR <- zoo(data_garch11_roll@forecast$VaR[, 1])
-#index(data_VaR) <- as.Date(data[121:1006,1])
-# do the same for the actual returns that are also stored in the ugarchroll object.
-#data_actual <- zoo(data_garch11_roll@forecast$VaR[, 2])
-#index(data_actual) <- as.Date(data[121:1006,1])
-
-# plot the VaR versus the actual returns of Intel 
-#plot(data_actual, type = "l", main = "99% 1 Month VaR Backtesting", xlab = "Date", ylab = "Return/VaR in percent")
-#lines(data_VaR, col = "red")
-#legend("topright", inset=.05, c("Returns","VaR"), col = c("black","red"), lty = c(1,1))
 
 # volatility forecasting
 data_garch11_fcst <- ugarchforecast(data_garch11_fit, n.ahead = forecastperiod)
