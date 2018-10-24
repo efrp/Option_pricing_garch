@@ -59,10 +59,9 @@ BsOptPricer <- function(ticker, start = "2014-10-01", end = "2018-10-01", days_l
   d1 <- (log(S / K) + (r + vol ^ 2 / 2) * days_left / 250) /
     (vol * sqrt(days_left / 250))
   d2 <- d1 - vol * sqrt(days_left / 250)
-  if (opt == "call"){
-    price <- pnorm(d1) * S - pnorm(d2) * K * exp(-r * days_left / 250)}
-  else {
-    price <- pnorm(-1*d2) * K * exp(-r * days_left / 250) - pnorm(-1*d1) * S}
+  c <- pnorm(d1) * S - pnorm(d2) * K * exp(-r * days_left / 250)
+  p <- pnorm(-1*d2) * K * exp(-r * days_left / 250) - pnorm(-1*d1) * S
+  price <- (opt == "call") * c + (opt == "put") * p
   return(as.numeric(price))
 }
 
