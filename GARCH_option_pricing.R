@@ -3,6 +3,10 @@ library(tidyquant)
 library(quantmod)
 library(rugarch)
 
+####This is a code which fits an arma(1-1)-Garch(1,1) model to an arbitrary company's share prices' time series
+####Based on the fit, I simulate trajectories, and I price a call and a put option for that company's share.
+#### Comparison with BS prices and ggplots are made.
+
 
 #downloading the relevant data from yahoo
 yahoo <- function(ticker, start, end) {
